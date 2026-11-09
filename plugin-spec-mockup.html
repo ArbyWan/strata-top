@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  .wrap { font-size: 13px; color: var(--foreground); padding: 2px 4px; max-width: 640px; }
+  .mono { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; }
+  .dim { color: var(--muted-foreground); }
+  .head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .title { font-weight: 600; }
+  .live { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted-foreground); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+  .sect { border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin-bottom: 8px; }
+  .secttitle { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: 6px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .r { display: block; line-height: 1.55; white-space: pre; }
+  .bar { color: var(--accent); }
+  .barlite { color: var(--muted-foreground); }
+  .warn { color: var(--accent); font-weight: 600; }
+  .chip { display: inline-block; border: 1px solid var(--border); border-radius: 999px; padding: 1px 8px; font-size: 11px; margin-top: 10px; }
+  .foot { margin-top: 10px; font-size: 11px; color: var(--muted-foreground); display: flex; gap: 14px; flex-wrap: wrap; }
+  .lnk { color: var(--accent); }
+  hr { border: 0; border-top: 1px dashed var(--border); margin: 12px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <span class="title">strata-top</span>
+    <span class="mono dim">Swift Qwen 3.8 27b</span>
+    <span class="mono dim">:8090</span>
+    <span class="live"><span class="dot"></span>live · 2s</span>
+    <span class="dim" style="margin-left:auto">idle</span>
+  </div>
+
+  <div class="sect">
+    <div class="secttitle">current task</div>
+    <div class="mono">
+      <span class="r">phase  <span class="dim">generating</span>   waiting 0     <span class="dim">ctx</span> 21.3K  <span class="dim">cache</span> 19.1K</span>
+      <span class="r">prefill    895 tok/s</span>
+      <span class="r">decode      46.2 tok/s</span>
+      <span class="r">drafts 72% accepted</span>
+      <span class="r">generated 1.2K / 8.0K  [<span class="bar">██████</span><span class="barlite">████████████████████</span>]</span>
+    </div>
+  </div>
+
+  <div class="sect">
+    <div class="secttitle">recent requests</div>
+    <div class="mono">
+      <span class="r">12:04:11  ctx   21.3K   1.2K tok   46.2 t/s  [<span class="bar">████████████████████</span>] stop</span>
+      <span class="r">12:01:58  ctx   78.4K  14.2K tok   42.6 t/s  [<span class="bar">███████████████</span><span class="barlite">█████</span>] stop</span>
+      <span class="r">11:57:30  ctx   64.0K    2.1K tok   44.1 t/s  [<span class="bar">█████████████████</span><span class="barlite">██</span>] stop</span>
+      <span class="r">11:52:02  ctx   12.8K    0.6K tok   39.8 t/s  [<span class="bar">█████████████</span><span class="barlite">███████</span>] stop</span>
+      <span class="r">11:44:37  ctx    4.1K    0.3K tok   26.4 t/s  [<span class="bar">████</span><span class="barlite">████████████████</span>] length</span>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="sect">
+      <div class="secttitle">system</div>
+      <div class="mono">
+        <span class="r">commit  57.1 / 95.4 GB  <span class="warn">59.9%</span></span>
+        <span class="r">        [<span class="bar">████████</span><span class="barlite">████████████</span>]  headroom 38.3 GB</span>
+        <span class="r">ram    64.0 GB total   free 41.2 GB</span>
+        <span class="r">        [<span class="bar">█████</span><span class="barlite">███████████████████</span>]  <span class="dim">pagefile peak &lt;3 GB</span></span>
+      </div>
+    </div>
+    <div class="sect">
+      <div class="secttitle">engine</div>
+      <div class="mono">
+        <span class="r">expert cache hit  91.2%   <span class="dim">PCIe</span> 4.1%</span>
+        <span class="r">KV in VRAM      88.0%   from RAM 2.1 GB</span>
+        <span class="r">tail skip missed  0       <span class="dim">engine alive</span></span>
+        <span class="r">up 3h 41m   <span class="dim">launch spec MTP on, prefill 100k</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>polling <span class="mono">/status</span> every 2s</span>
+    <span class="lnk">⚙ endpoint + alert thresholds → Settings ▸ Plugins ▸ strata-top</span>
+  </div>
+
+  <hr>
+
+  <span class="dim" style="font-size:11px">status-bar chip it would also contribute:</span><br>
+  <span class="chip mono">⬢ 46.2 t/s · busy 21.3K ctx</span>
+
+  <hr>
+
+  <span class="dim" style="font-size:11px">agent-side surfaces: <span class="mono">strata_status</span> tool (JSON for the model) · <span class="mono">/strata-top</span> slash command (prints one frame, the --once path ported to Python) · <span class="mono">::strata{live}</span> transcript directive (optional)</span>
+</div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "strata-top",
+  "title": "Strata Top",
+  "description": "Live telemetry from the Strata server's GET /status, for the pane and the status-bar chip.",
+  "api": "plugin_api.py"
+}

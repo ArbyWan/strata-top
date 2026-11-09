@@ -1,0 +1,30 @@
+manifest_version: 2
+name: strata-top
+title: Strata Top
+description: Live telemetry for a running Strata server — desktop pane, status-bar chip, agent tool, /strata-top slash command. Polls GET /status only; never touches the server.
+version: 0.1.0
+license: MIT
+homepage: file:///C:/Hermes/Default%20Project/strata-top/plugin-spec-mockup.html
+tags: [telemetry, strata, dashboard, monitoring]
+provides_tools:
+  - strata_top_status
+config_schema:
+  endpoint:
+    type: str
+    default: "http://127.0.0.1:8080"
+    label: "Strata server base URL"
+    description: "Where the live Strata server answers GET /status (e.g. http://127.0.0.1:8080)."
+  poll_interval_seconds:
+    type: int
+    default: 5
+    label: "Pane poll interval (seconds)"
+    description: "How often the desktop pane refreshes. Minimum 2."
+  commit_warn_percent:
+    type: int
+    default: 90
+    label: "Commit usage warning (%)"
+    description: "Amber alert when the server reports commit usage above this. On Windows the commit ceiling — not RAM — is what kills a run silently."
+  show_chip:
+    type: bool
+    default: true
+    label: "Show the status-bar chip"
